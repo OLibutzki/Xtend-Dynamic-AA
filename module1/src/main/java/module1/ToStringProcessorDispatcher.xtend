@@ -1,21 +1,25 @@
 package module1
 
-import org.eclipse.xtend.lib.macro.AbstractClassProcessor
-import org.eclipse.xtend.lib.macro.declaration.MutableClassDeclaration
-import org.eclipse.xtend.lib.macro.TransformationContext
-import org.springframework.boot.SpringApplication
-import org.springframework.context.ConfigurableApplicationContext
-import org.eclipse.xtend.lib.macro.TransformationParticipant
 import java.util.List
+import org.eclipse.xtend.lib.macro.AbstractClassProcessor
+import org.eclipse.xtend.lib.macro.TransformationContext
+import org.eclipse.xtend.lib.macro.TransformationParticipant
+import org.eclipse.xtend.lib.macro.declaration.MutableClassDeclaration
 
-class ToStringProcessorDispatcher extends AbstractClassProcessor{
-	
-	private static ConfigurableApplicationContext applicationContext = SpringApplication.run(Module1Configuration)
-	
-	override doTransform(List<? extends MutableClassDeclaration> annotatedClasses, extension TransformationContext context) {
-		val toStringProcessor = applicationContext.getBean("toStringProcessor", TransformationParticipant)
-		toStringProcessor.doTransform(annotatedClasses, context)
+class ToStringProcessorDispatcher extends AbstractClassProcessor {
+
+	public static long duration;
+
+	public static TransformationParticipant transformationParticipant = {
+		val startTime = System.currentTimeMillis
+		val processorClassName = Helper.getProcessorClassName(ToStringProcessorDispatcher.classLoader)
+		val transformationParticipant = Class.forName(processorClassName).newInstance as TransformationParticipant
+		duration = System.currentTimeMillis - startTime
+		transformationParticipant
 	}
 
-	
+	override doTransform(List<? extends MutableClassDeclaration> annotatedClasses, extension TransformationContext context) {
+		transformationParticipant.doTransform(annotatedClasses, context)
+	}
+
 }

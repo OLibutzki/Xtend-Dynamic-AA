@@ -16,20 +16,5 @@
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
 	</dependencies>
-	<build>
-		<plugins>
-			<plugin>
-				<groupId>org.eclipse.xtend</groupId>
-				<artifactId>xtend-maven-plugin</artifactId>
-				<version>${xtend.version}</version>
-				<dependencies>
-					<dependency>
-						<groupId>dynamic-annotation</groupId>
-						<artifactId>module2</artifactId>
-						<version>0.0.1-SNAPSHOT</version>
-					</dependency>
-				</dependencies>
-			</plugin>
-		</plugins>
-	</build>
+
 </project>
